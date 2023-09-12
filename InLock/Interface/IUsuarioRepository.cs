@@ -2,7 +2,7 @@
 
 namespace InLock.Interface
 {
-    public interface IUsuarioDomain
+    public interface IUsuarioRepository
     {
         UsuarioDomain Login(string Email, string Senha);
     }

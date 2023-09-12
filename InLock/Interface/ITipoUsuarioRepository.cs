@@ -2,7 +2,7 @@
 
 namespace InLock.Interface
 {
-    public interface ITipoUsuario
+    public interface ITipoUsuarioRepository
     {
         List<TipoUsuarioDomain> ListarTodos();
     }

@@ -8,5 +8,7 @@
         public string Descriao { get; set; }
         public string DataLancamento { get; set; }
         public float Valor { get; set; }
+        public string? Descricao { get; internal set; }
+        public EstudioDomain Estudio { get; internal set; }
     }
 }

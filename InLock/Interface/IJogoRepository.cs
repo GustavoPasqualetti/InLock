@@ -6,8 +6,7 @@ namespace InLock.Interface
     {
         void Cadastrar(JogoDomain novoJogo);
         List<JogoDomain> ListarTodos();
-        JogoDomain BuscarPorId(int id);
-        void AtualizarIdCorpo(JogoDomain Jogo);
+
         void Deletar(int id);
     }
 }

@@ -4,21 +4,11 @@ using System.Data.SqlClient;
 
 namespace InLock.Repositores
 {
-    public class JogoRepository : IEstudioRepository
+    public class JogoRepository : IJogoRepository
     {
-        private string StringConexao = "Data source = NOTE02-S14; Initial Catalog = inlock_games; User Id = sa; pwd = Senai@134";
-        private string query;
-        private SqlConnection connection;
-        private string querySelectById;
-
-        public int IdJogo { get; private set; }
-        public int IdEstudio { get; private set; }
-        public string Nome { get; private set; }
-        public string Descricao { get; private set; }
-        public string DataLancamento { get; private set; }
-        public float Valor { get; private set; }
-        public string QuerySelect { get; private set; }
-
+        private string StringConexao = "Data Source = NOTE02-S14; Initial Catalog = inlock_games; User Id = sa; pwd = Senai@134";
+        
+  
         public void Cadastrar(JogoDomain novoJogo)
         {
             using (SqlConnection con = new SqlConnection(StringConexao))
@@ -40,12 +30,13 @@ namespace InLock.Repositores
             }
         }
 
-        public List<JogoDomain> ListarJogos()
+        public List<JogoDomain> ListarTodos()
         {
             List<JogoDomain> listaJogos = new List<JogoDomain>();
+
             using (SqlConnection con = new SqlConnection(StringConexao))
             {
-                string querySelectAll = "SELECT Jogos.IdJogo, Estudio.IdEstudio, Jogo.Nome, Jogo.Descricao, Jogo.DataLancamento FROM Jogo INNER JOIN Estudio ON Jogo.IdEstudio = Estudio.IdEstudio";
+                string querySelectAll = "SELECT IdJogo, Estudio.IdEstudio, Jogo.Nome, Descricao, Jogo.DataLancamento FROM Jogo INNER JOIN Estudio ON Jogo.IdEstudio = Estudio.IdEstudio";
                 con.Open();
 
                 SqlDataReader rdr;
@@ -65,7 +56,7 @@ namespace InLock.Repositores
 
                             DataLancamento = rdr["DataLancamento"].ToString(),
 
-                            Estudio = new JogoDomain()
+                            Estudio = new EstudioDomain()
                             {
                                 IdEstudio = Convert.ToInt32(rdr["IdEstudio"]),
 
@@ -74,9 +65,9 @@ namespace InLock.Repositores
                         };
 
                         //adiciona cada objeto dentro da lista
-                        listaEstudios.Add(estudios);
+                        listaJogos.Add(jogos);
                     }
-                    return listaEstudios;
+                    return listaJogos;
                 }
             }
         }
@@ -85,7 +76,7 @@ namespace InLock.Repositores
         {
             using (SqlConnection con = new SqlConnection(StringConexao))
             {
-                string queryDelete = "DELETE FROM Estudio WHERE IdEstudio = @id";
+                string queryDelete = "DELETE FROM Jogo WHERE IdJogo = @id";
 
                 using (SqlCommand cmd = new SqlCommand(queryDelete, con))
                 {
@@ -97,5 +88,9 @@ namespace InLock.Repositores
                 }
             }
         }
+
+
+
+      
     }
 }

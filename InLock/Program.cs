@@ -22,13 +22,15 @@ builder.Services.AddAuthentication(options =>
 
         ValidateLifetime = true,
 
-        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("filmes-chave-autenticacao-webapi-dev")),
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("InLock-chave-autenticacao-webapi-dev")),
 
         ClockSkew = TimeSpan.FromMinutes(5),
 
-        ValidIssuer = "InLock"
+        ValidIssuer = "InLock",
+        ValidAudience = "InLock"
     };
 });
+
 
 
 builder.Services.AddSwaggerGen(options =>
@@ -44,8 +46,9 @@ builder.Services.AddSwaggerGen(options =>
             Url = new Uri("https://example.com/contact")
         },
     });
+
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
@@ -60,6 +63,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         {
             new OpenApiSecurityScheme
+            
             {
                 Reference = new OpenApiReference
                 {

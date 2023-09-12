@@ -3,28 +3,29 @@ using InLock.Interface;
 using InLock.Repositores;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace InLock.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EstudioController : ControllerBase
+    public class JogoController : ControllerBase
     {
-        private IEstudioRepository _estudioRepository { get; set; }
+        private IJogoRepository _jogoRepository { get; set; }
 
-        public EstudioController()
+        public JogoController()
         {
-            _estudioRepository= new EstudioRepository();
+            _jogoRepository = new JogoRepository();
         }
 
+
+      
         [HttpPost]
         [Authorize(Roles = "2")]
-        public IActionResult Post(EstudioDomain novoEstudio)
+        public IActionResult Post(JogoDomain novoJogo)
         {
             try
             {
-                _estudioRepository.Cadastrar(novoEstudio);
+                _jogoRepository.Cadastrar(novoJogo);
 
                 return StatusCode(201);
             }
@@ -35,13 +36,13 @@ namespace InLock.Controller
         }
 
         [HttpGet]
-        [Authorize(Roles = "1,2")]
+        [Authorize]
         public IActionResult Get()
         {
             try
             {
-                List<EstudioDomain> listaestudios = _estudioRepository.ListarEstudios();
-                return Ok(listaestudios);
+               List<JogoDomain> listaJogos= _jogoRepository.ListarTodos();
+                return Ok(listaJogos);
             }
             catch (Exception erro)
             {
@@ -51,12 +52,11 @@ namespace InLock.Controller
 
         [HttpDelete]
         [Authorize(Roles = "2")]
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(int id) 
         {
             try
             {
-                _estudioRepository.Deletar(Id);
-
+                _jogoRepository.Deletar(id);
                 return StatusCode(200);
             }
             catch (Exception erro)

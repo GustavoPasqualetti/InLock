@@ -7,15 +7,8 @@ namespace InLock.Repositores
 {
     public class EstudioRepository : IEstudioRepository
     {
-        private string StringConexao = "Data source = NOTE02-S14; Initial Catalog = inlock_games; User Id = sa; pwd = Senai@134";
-        private string query;
-        private SqlConnection connection;
-        private string querySelectById;
-
-        public int IdEstudio { get; private set; }
-        public string Nome { get; private set; }
-        public string QuerySelect { get; private set; }
-
+        private string StringConexao = "Data Source = NOTE02-S14; Initial Catalog = inlock_games; User Id = sa; pwd = Senai@134";
+  
         public void Cadastrar(EstudioDomain novoEstudio)
         {
             using (SqlConnection con = new SqlConnection(StringConexao))
